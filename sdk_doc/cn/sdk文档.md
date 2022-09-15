@@ -1,14 +1,12 @@
 ## 一，架构解析 
 
 ### 1，服务启动流程图
-
-https://www.processon.com/diagraming/6290877c5653bb788c7a3617
-
-![](img/image-20220527162121324.png)
+## 使用springboot加载配置文件，然后初始化tcp服务，tcp服务初始化时设置雷达协议处理器。
+![](img/server_start.svg)
 
 ### 2，雷达服务器请求处理时序图
 ## 底层通过RadarCommandDecoder协议解码拆包，然后通过RadarSerializer反序列化，最终按如下时序图流程调用各个handler处理
-![img.png](img/img.png)
+![img.png](img/process_request.svg)
 
 ```java
 package com.timevary.radar.tcp.service.fromRadar;
