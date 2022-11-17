@@ -47,4 +47,13 @@ public class HeatMapsData implements Serializable {
     public void setHeatN(List<Integer> heatN) {
         HeatN = heatN;
     }
+
+    @Override
+    public String toString() {
+        return "HeatMapsData{" +
+                "HeatX=" + HeatX +
+                ", HeatY=" + HeatY +
+                ", HeatN=" + HeatN +
+                '}';
+    }
 }
