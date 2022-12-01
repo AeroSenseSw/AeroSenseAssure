@@ -12,6 +12,7 @@ import com.timevary.radar.tcp.exception.RadarException;
 import com.timevary.radar.tcp.protocol.RadarProtocol;
 import com.timevary.radar.tcp.util.ByteUtils;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +33,11 @@ public class RadarCommandDecoder implements CommandDecoder {
     @Override
     public void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         // the less length between response header and request header
+        byte[] bytes = new byte[in.readableBytes()];
+        ByteBuf readableBuf = in.getBytes(in.readerIndex(), bytes);
+        StringBuilder dump = new StringBuilder();
+        ByteBufUtil.appendPrettyHexDump(dump, readableBuf);
+        log.debug("receive bytes {} - {}\n{}", ctx.channel(), in.readableBytes(), dump.toString());
         if (in.readableBytes() >= RadarProtocol.PROTOCOL_HEADER_LEN) {
             in.markReaderIndex();
             byte protocol = in.readByte();

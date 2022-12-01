@@ -11,6 +11,7 @@ import com.timevary.radar.tcp.protocol.RadarProtocol;
 import com.timevary.radar.tcp.protocol.RadarProtocolData;
 import com.timevary.radar.tcp.util.ByteUtils;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,7 @@ public class RadarCommandEncoder implements CommandEncoder {
              * cotentLen: length of content //do by server
              * content
              */
-            int index = out.writerIndex();
+            int cwi = out.writerIndex();
             RpcCommand cmd = (RpcCommand) msg;
             out.writeByte(RadarProtocol.PROTOCOL_CODE);
             Attribute<Byte> version = ctx.channel().attr(Connection.VERSION);
@@ -67,6 +68,12 @@ public class RadarCommandEncoder implements CommandEncoder {
             if (cmd.getContentLength() > 0) {
                 out.writeBytes(cmd.getContent());
             }
+
+            byte[] writeBytes = new byte[out.readableBytes()];
+            ByteBuf writeableBuf = out.getBytes(cwi, writeBytes);
+            StringBuilder dump = new StringBuilder();
+            ByteBufUtil.appendPrettyHexDump(dump, writeableBuf);
+            log.debug("send bytes: {} - {}\n{}", ctx.channel(), writeBytes.length, dump.toString());
         } else {
             String warnMsg = "cancel encode msg type [" + msg.getClass() + "] is not subclass of RpcCommand";
             log.warn(warnMsg);
