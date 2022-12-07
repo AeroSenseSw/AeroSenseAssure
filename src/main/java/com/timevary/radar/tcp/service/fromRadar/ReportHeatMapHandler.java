@@ -24,7 +24,7 @@ public class ReportHeatMapHandler  implements RadarProtocolDataHandler {
 
     @Override
     public Object process(RadarProtocolData protocolData) {
-        /**热力图数据 - x、y、n点数据数组*/
+        //process the heat map data
         byte[] heatMapBytes = protocolData.getData();
         if (heatMapBytes == null || heatMapBytes.length == 0) {
             return null;
@@ -55,15 +55,9 @@ public class ReportHeatMapHandler  implements RadarProtocolDataHandler {
         }
         /**解析后的热力图数据*/
         HeatMapsData heatMapsData = new HeatMapsData(heatX, heatY, heatN);
-        // TODO 处理热力图数据
+        // TODO process the heat map data
         System.out.println("radar heat map data "+heatMapsData);
-        try {
-            float workRange = RequestRadarUtil.getWorkRange(protocolData.getRadarId());
-            System.out.println("server call radar to get work range is " +workRange);
-        } catch (RemotingException e) {
-            System.out.println("server call radar to get work range failure");
-        }
-
+        System.out.println("process the heat map data you want to");
         return null;
     }
 
