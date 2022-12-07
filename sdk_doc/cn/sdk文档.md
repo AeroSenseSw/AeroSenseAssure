@@ -52,7 +52,7 @@ public class CreateConnectionHandler implements RadarProtocolDataHandler {
 ### 1：clone此工程
 ### 2：实现FunctionEnum中定义的雷达发送的命令函数handler，打上@Service注解注入到spring容器，处理相应的业务逻辑。
 （此示例工程已经给出了几个handler实现，在com.timevary.radar.tcp.service.fromRadar包下，相关报警逻辑需要自己实现)
-
+### 3: 查看[README.md](../../README.md)文档，运行应用程序
 
 ## 三、服务端主动发送数据给雷达
 ### 通过RequestRadarUtil工具类，直接调用工具类的封装好的静态方法，调用雷达返回数据

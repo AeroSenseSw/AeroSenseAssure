@@ -52,6 +52,7 @@ public class CreateConnectionHandler implements RadarProtocolDataHandler {
 ### (1) Clone this project
 ### (2) Implement the command function handler sent by the radar defined in FunctionEnum, annotate it with @Service and inject it into the spring container to process the corresponding business logic.
 (Several handler implementations have been given in this sample project. Under the com.timevary.radar.tcp.service.fromRadar package, The related alarm logic needs to be implemented by yourself.)
+### (3) See the [README.md](../../README.md) doc then run application.
 
 
 ## 3. The server actively sends data to the radar
