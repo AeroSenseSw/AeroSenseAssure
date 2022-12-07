@@ -36,7 +36,7 @@ public class RequestRadarUtil {
      */
     public static RadarProtocolData invokeToRadar(RadarProtocolData radarProtocolData)
             throws RemotingException {
-       return invokeToRadar(radarProtocolData, 3000);
+       return invokeToRadar(radarProtocolData, 15000);
     }
 
     /**

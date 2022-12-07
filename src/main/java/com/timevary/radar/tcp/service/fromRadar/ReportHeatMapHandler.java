@@ -56,12 +56,12 @@ public class ReportHeatMapHandler  implements RadarProtocolDataHandler {
         /**解析后的热力图数据*/
         HeatMapsData heatMapsData = new HeatMapsData(heatX, heatY, heatN);
         // TODO 处理热力图数据
-        System.out.println("heat map data "+heatMapsData);
+        System.out.println("radar heat map data "+heatMapsData);
         try {
             float workRange = RequestRadarUtil.getWorkRange(protocolData.getRadarId());
-            System.out.println(workRange);
+            System.out.println("server call radar to get work range is " +workRange);
         } catch (RemotingException e) {
-            e.printStackTrace();
+            System.out.println("server call radar to get work range failure");
         }
 
         return null;
