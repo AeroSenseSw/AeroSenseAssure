@@ -19,6 +19,7 @@ public class FallDetectHandler  implements RadarProtocolDataHandler {
     @Override
     public Object process(RadarProtocolData protocolData) throws RemotingException, InterruptedException {
         //TODO 处理摔倒报警逻辑
+        System.out.println("fall detect");
         return null;
     }
 
