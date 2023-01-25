@@ -10,4 +10,4 @@ You must turn off the firewall. The firewall will block the connection.
 Run `mvn clean install spring-boot:run` in the project root directory. The server will be started at port 8899.
 
 ## Running the project from your IDE
-Navigate to the `com.timevary.radar.tcp.Application` class and run it as a Java application.
+Navigate to the `Application` class and run it as a Java application.

@@ -9,7 +9,7 @@
         <version>2.3.12.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.timevary</groupId>
+    <groupId>com.aerosense</groupId>
     <artifactId>AeroSenseAssure</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <properties>
@@ -54,7 +54,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.timevary.radar.tcp.Application</mainClass>
+                    <mainClass>com.aerosense.radar.tcp.Application</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
