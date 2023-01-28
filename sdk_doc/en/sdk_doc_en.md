@@ -1,11 +1,11 @@
 ## 1. Architecture analysis
 
-### (1) Service startup flowchart
+### (1) Flowchart to initiate the service
 
 ![](img/server_start.svg)
 ## Use springboot to load the configuration file, then initialize the tcp server. Set the radar protocol processor when the tcp server is in initializing. 
-### (2) Processing diagram between radar and server
-## The bottom layer is decoded and unpacked accoridng to the RadarCommandDecoder protocol, and then deserialized through the RadarSerializer, It is finally processed by each handler according to the following diagram.
+### (2) Flowchart to process the radar server request
+## The bottom layer is firstly decoded and unpacked using the RadarCommandDecoder protocol, then deserialized through the RadarSerializer, and finally processed by each handler as shown in the diagram below.
 ![img.png](img/process_request.svg)
 
 ```java
@@ -50,15 +50,13 @@ public class CreateConnectionHandler implements RadarProtocolDataHandler {
 ## 2. Quick start
 
 ### (1) Clone this project
-### (2) Implement the command function handler sent by the radar defined in FunctionEnum, annotate it with @Service and inject it into the spring container to process the corresponding business logic.
-(Several handler implementations have been given in this sample project. Under the com.aerosense.radar.tcp.service.fromRadar package, The related alarm logic needs to be implemented by yourself.)
-### (3) See the [README.md](../../README.md) doc then run application.
+### (2) Implement the command handler as defined in FunctionEnum and sent by the radar, Annotate it with @Service and inject it into the spring container to process the corresponding logic. 
+        There are several examples of the implementation of the handlers, as shown in the package " com.aerosense.radar.tcp.service.fromRadar". However, the developer is recommended to user their own logic to implement the alerts.
+### (3) See [README.md](../../README.md) doc and run application.
 
 
-## 3. The server actively sends data to the radar
-### Through the RequestRadarUtil tool class, directly call the encapsulated static method of the tool class, and call the radar to return data.
+## 3. The server proactively sends data to the radar
+### A static method that has been encapsulated can be directly called by using the tool " RequestRadarUtil" to call the data that has been returned by the radar.
 
-## 4. customized protocol handler
-
-### No, because each protocol can only have one processor, there cannot be more than one.
+## 4. It is NOT allowed as there can be ONLY one processor for each protocol.
 
