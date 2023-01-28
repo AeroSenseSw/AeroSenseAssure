@@ -50,8 +50,7 @@ public class CreateConnectionHandler implements RadarProtocolDataHandler {
 ## 2. Quick start
 
 ### (1) Clone this project
-### (2) Implement the command handler as defined in FunctionEnum and sent by the radar, Annotate it with @Service and inject it into the spring container to process the corresponding logic. 
-        There are several examples of the implementation of the handlers, as shown in the package " com.aerosense.radar.tcp.service.fromRadar". However, the developer is recommended to user their own logic to implement the alerts.
+### (2) Implement the command handler as defined in FunctionEnum and sent by the radar, Annotate it with @Service and inject it into the spring container to process the corresponding logic. There are several examples of the implementation of the handlers, as shown in the package " com.aerosense.radar.tcp.service.fromRadar". However, the developer is recommended to user their own logic to implement the alerts.
 ### (3) See [README.md](../../README.md) doc and run application.
 
 
