@@ -1,14 +1,13 @@
 package com.aerosense.radar.tcp.util;
 
 /**
- * 字节工具类
+ * Byte util
  *
  * @author jia.wu
  */
 public class ByteUtil {
 
     /**
-     * 将int转为高字节在前，低字节在后的byte数组（大端）
      *
      * @param n int
      * @return byte[]
@@ -23,7 +22,6 @@ public class ByteUtil {
     }
 
     /**
-     * 将int转为低字节在前，高字节在后的byte数组（小端）
      *
      * @param n int
      * @return byte[]
@@ -38,7 +36,6 @@ public class ByteUtil {
     }
 
     /**
-     * byte数组到int的转换(小端)
      *
      * @param bytes
      * @return
@@ -53,7 +50,6 @@ public class ByteUtil {
     }
 
     /**
-     * byte数组到int的转换(大端)
      *
      * @param bytes
      * @return
@@ -68,7 +64,6 @@ public class ByteUtil {
     }
 
     /**
-     * 将short转为高字节在前，低字节在后的byte数组（大端）
      *
      * @param n short
      * @return byte[]
@@ -81,7 +76,6 @@ public class ByteUtil {
     }
 
     /**
-     * 将short转为低字节在前，高字节在后的byte数组(小端)
      *
      * @param n short
      * @return byte[]
@@ -94,7 +88,6 @@ public class ByteUtil {
     }
 
     /**
-     * 读取小端byte数组为short
      *
      * @param b
      * @return
@@ -104,7 +97,6 @@ public class ByteUtil {
     }
 
     /**
-     * 读取大端byte数组为short
      *
      * @param b
      * @return
@@ -114,7 +106,6 @@ public class ByteUtil {
     }
 
     /**
-     * long类型转byte[] (大端)
      *
      * @param n
      * @return
@@ -133,7 +124,6 @@ public class ByteUtil {
     }
 
     /**
-     * long类型转byte[] (小端)
      *
      * @param n
      * @return
@@ -152,7 +142,6 @@ public class ByteUtil {
     }
 
     /**
-     * byte[]转long类型(小端)
      *
      * @param array
      * @return
@@ -169,7 +158,6 @@ public class ByteUtil {
     }
 
     /**
-     * byte[]转long类型(大端)
      *
      * @param array
      * @return
@@ -189,27 +177,18 @@ public class ByteUtil {
     //-------------------------------------------------------
 
     /**
-     *
-     * <pre>
-     * 将4个byte数字组成的数组合并为一个float数.
-     * </pre>
-     *
      * @param arr
      * @return
      */
     public static float byte4ToFloat(byte[] arr) {
         if (arr == null || arr.length != 4) {
-            throw new IllegalArgumentException("byte数组必须不为空,并且是4位!");
+            throw new IllegalArgumentException("Byte array must be equal to 4");
         }
         int i = byte4ToInt(arr);
         return Float.intBitsToFloat(i);
     }
 
     /**
-     *
-     * <pre>
-     * 将一个float数字转换为4个byte数字组成的数组.
-     * </pre>
      *
      * @param f
      * @return
@@ -221,26 +200,18 @@ public class ByteUtil {
 
     /**
      *
-     * <pre>
-     * 将八个byte数字组成的数组转换为一个double数字.
-     * </pre>
-     *
      * @param arr
      * @return
      */
     public static double byte8ToDouble(byte[] arr) {
         if (arr == null || arr.length != 8) {
-            throw new IllegalArgumentException("byte数组必须不为空,并且是8位!");
+            throw new IllegalArgumentException("Byte array must be equal to 8");
         }
         long l = byte8ToLong(arr);
         return Double.longBitsToDouble(l);
     }
 
     /**
-     *
-     * <pre>
-     * 将一个double数字转换为8个byte数字组成的数组.
-     * </pre>
      *
      * @param i
      * @return
@@ -251,10 +222,6 @@ public class ByteUtil {
     }
 
     /**
-     *
-     * <pre>
-     * 将一个char字符转换为两个byte数字转换为的数组.
-     * </pre>
      *
      * @param c
      * @return
@@ -268,16 +235,12 @@ public class ByteUtil {
 
     /**
      *
-     * <pre>
-     * 将2个byte数字组成的数组转换为一个char字符.
-     * </pre>
-     *
      * @param arr
      * @return
      */
     public static char byte2ToChar(byte[] arr) {
         if (arr == null || arr.length != 2) {
-            throw new IllegalArgumentException("byte数组必须不为空,并且是2位!");
+            throw new IllegalArgumentException("Byte array must be equal to 2");
         }
         return (char) (((char) (arr[0] << 8)) | ((char) arr[1]));
     }
@@ -285,7 +248,7 @@ public class ByteUtil {
     /**
      *
      * <pre>
-     * 将一个16位的short转换为长度为2的8位byte数组.
+
      * </pre>
      *
      * @param s
@@ -301,7 +264,7 @@ public class ByteUtil {
     /**
      *
      * <pre>
-     * 长度为2的8位byte数组转换为一个16位short数字.
+
      * </pre>
      *
      * @param arr
@@ -309,18 +272,12 @@ public class ByteUtil {
      */
     public static short byte2ToShort(byte[] arr) {
         if (arr != null && arr.length != 2) {
-            throw new IllegalArgumentException("byte数组必须不为空,并且是2位!");
+            throw new IllegalArgumentException("Byte array must be equal to 2");
         }
         return (short) (((short) arr[0] << 8) | ((short) arr[1] & 0xff));
     }
 
     /**
-     *
-     * <pre>
-     * 将short转换为长度为16的byte数组.
-     * 实际上每个8位byte只存储了一个0或1的数字
-     * 比较浪费.
-     * </pre>
      *
      * @param s
      * @return
@@ -336,7 +293,7 @@ public class ByteUtil {
 
     public static short byte16ToShort(byte[] arr) {
         if (arr == null || arr.length != 16) {
-            throw new IllegalArgumentException("byte数组必须不为空,并且长度为16!");
+            throw new IllegalArgumentException("Byte array must be equal to 16");
         }
         short sum = 0;
         for (int i = 0; i < 16; ++i) {
@@ -346,10 +303,6 @@ public class ByteUtil {
     }
 
     /**
-     *
-     * <pre>
-     * 将32位int转换为由四个8位byte数字.
-     * </pre>
      *
      * @param sum
      * @return
@@ -363,36 +316,29 @@ public class ByteUtil {
         return arr;
     }
 
+
+
     /**
-     * <pre>
-     * 将长度为4的8位byte数组转换为32位int.
-     * </pre>
-     *
+
      * @param arr
      * @return
      */
     public static int byte4ToInt(byte[] arr) {
         if (arr == null || arr.length != 4) {
-            throw new IllegalArgumentException("byte数组必须不为空,并且是4位!");
+            throw new IllegalArgumentException("Byte array must be equal to 4");
         }
         return (int) (((arr[0] & 0xff) << 24) | ((arr[1] & 0xff) << 16) | ((arr[2] & 0xff) << 8) | ((arr[3] & 0xff)));
     }
 
     /**
-     *
-     * <pre>
-     * 将长度为8的8位byte数组转换为64位long.
-     * </pre>
-     *
-     * 0xff对应16进制,f代表1111,0xff刚好是8位 byte[]
-     * arr,byte[i]&0xff刚好满足一位byte计算,不会导致数据丢失. 如果是int计算. int[] arr,arr[i]&0xffff
+
      *
      * @param arr
      * @return
      */
     public static long byte8ToLong(byte[] arr) {
         if (arr == null || arr.length != 8) {
-            throw new IllegalArgumentException("byte数组必须不为空,并且是8位!");
+            throw new IllegalArgumentException("Byte array must be equal to 8");
         }
         return (long) (((long) (arr[0] & 0xff) << 56) | ((long) (arr[1] & 0xff) << 48) | ((long) (arr[2] & 0xff) << 40)
                 | ((long) (arr[3] & 0xff) << 32) | ((long) (arr[4] & 0xff) << 24)
@@ -400,7 +346,6 @@ public class ByteUtil {
     }
 
     /**
-     * 将一个long数字转换为8个byte数组组成的数组.
      */
     public static byte[] longToByte8(long sum) {
         byte[] arr = new byte[8];
@@ -417,21 +362,13 @@ public class ByteUtil {
 
     /**
      *
-     * <pre>
-     * 将int转换为32位byte.
-     * 实际上每个8位byte只存储了一个0或1的数字
-     * 比较浪费.
-     * </pre>
-     *
      * @param num
      * @return
      */
     public static byte[] intToByte32(int num) {
         byte[] arr = new byte[32];
         for (int i = 31; i >= 0; i--) {
-            // &1 也可以改为num&0x01,表示取最地位数字.
             arr[i] = (byte) (num & 1);
-            // 右移一位.
             num >>= 1;
         }
         return arr;
@@ -439,17 +376,12 @@ public class ByteUtil {
 
     /**
      *
-     * <pre>
-     * 将长度为32的byte数组转换为一个int类型值.
-     * 每一个8位byte都只存储了0或1的数字.
-     * </pre>
-     *
      * @param arr
      * @return
      */
     public static int byte32ToInt(byte[] arr) {
         if (arr == null || arr.length != 32) {
-            throw new IllegalArgumentException("byte数组必须不为空,并且长度是32!");
+            throw new IllegalArgumentException("Byte array must be equal to 32");
         }
         int sum = 0;
         for (int i = 0; i < 32; ++i) {
@@ -460,17 +392,12 @@ public class ByteUtil {
 
     /**
      *
-     * <pre>
-     * 将长度为64的byte数组转换为一个long类型值.
-     * 每一个8位byte都只存储了0或1的数字.
-     * </pre>
-     *
      * @param arr
      * @return
      */
     public static long byte64ToLong(byte[] arr) {
         if (arr == null || arr.length != 64) {
-            throw new IllegalArgumentException("byte数组必须不为空,并且长度是64!");
+            throw new IllegalArgumentException("Byte array must be equal to 64");
         }
         long sum = 0L;
         for (int i = 0; i < 64; ++i) {
@@ -480,11 +407,6 @@ public class ByteUtil {
     }
 
     /**
-     *
-     * <pre>
-     * 将一个long值转换为长度为64的8位byte数组.
-     * 每一个8位byte都只存储了0或1的数字.
-     * </pre>
      *
      * @param sum
      * @return

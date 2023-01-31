@@ -1,7 +1,7 @@
 package com.aerosense.radar.tcp.connection;
 
 /**
- * Created with IntelliJ IDEA.
+ * 
  *
  * @author： jia.wu
  * @date： 2021/8/23 10:24

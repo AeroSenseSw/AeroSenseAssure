@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
+ * 
  *
  * @author： jia.wu
  * @date： 2021/8/3 16:23
@@ -40,10 +40,10 @@ public class RadarTcpServer extends RpcServer {
     private RadarTcpServerProperties radarTcpServerProperties;
 
     static {
-        //初始化注册雷达协议
+
         RadarProtocolManager.initProtocols();
         log.info("initialize radar protocol register successful.");
-        //初始化注册雷达序列化器
+
         RadarSerializerManager.initSerializer();
         log.info("initialize radar protocol serializer successful.");
     }
@@ -93,7 +93,7 @@ public class RadarTcpServer extends RpcServer {
     protected void doInit() throws LifeCycleException {
         log.info("initializing radar tcp server");
         System.setProperty(Configs.TCP_SERVER_IDLE, String.valueOf(radarTcpServerProperties.getIdleTimeout()));
-        //同步停止服务器
+
         switches().turnOn(GlobalSwitch.SERVER_SYNC_STOP);
         initRadarProtocolDataProcessor();
         initServerConnectEventProcess();
@@ -141,7 +141,7 @@ public class RadarTcpServer extends RpcServer {
         return radarTcpServer;
     }
     /**
-     * 采用雷达协议数据同步调用雷达
+
      * @param requestObj
      * @param timeoutMillis
      * @return
@@ -155,7 +155,7 @@ public class RadarTcpServer extends RpcServer {
     }
 
     /**
-     * 采用雷达协议数据同步调用雷达
+
      * @param requestObj
      * @param invokeContext
      * @param timeoutMillis

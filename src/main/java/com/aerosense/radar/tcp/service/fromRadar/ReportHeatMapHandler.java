@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 雷达上报热力图解析处理
+ *  report heat map handler
  * @author ：jia.w
  */
 @Slf4j
@@ -29,10 +29,10 @@ public class ReportHeatMapHandler  implements RadarProtocolDataHandler {
         }
         int heatMapLen = heatMapBytes.length;
         if (heatMapLen % 3 != 0) {
-            log.error("热力图数据不完整");
+
             return null;
         }
-        /**雷达x、y、n点数量*/
+
         int pointNum = heatMapLen / 3;
         List<Integer> heatX = new ArrayList<>(pointNum);
         List<Integer> heatY = new ArrayList<>(pointNum);
@@ -51,7 +51,7 @@ public class ReportHeatMapHandler  implements RadarProtocolDataHandler {
                 heatN.add(n);
             }
         }
-        /**解析后的热力图数据*/
+
         HeatMapsData heatMapsData = new HeatMapsData(heatX, heatY, heatN);
         // TODO process the heat map data
         System.out.println("radar heat map data "+heatMapsData);
@@ -60,11 +60,11 @@ public class ReportHeatMapHandler  implements RadarProtocolDataHandler {
     }
 
     public int returnX(byte x) {
-        //只要X是负数或正数小于128，就不经过处理
+
         if (x < 128 || -x < 128) {
             return x;
         }
-        //若x大于128，就让它减256
+
         return x - 256;
     }
 

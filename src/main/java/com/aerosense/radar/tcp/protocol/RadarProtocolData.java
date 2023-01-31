@@ -18,15 +18,15 @@ import java.util.Arrays;
 public class RadarProtocolData implements Serializable {
     /** For serialization  */
     private static final long serialVersionUID = 1;
-    /**函数接口*/
+
     private FunctionEnum    function;
-    /**雷达id*/
+
     private String          radarId;
-    /**雷达版本号*/
+
     private String          radarVersion;
-    /**雷达类型*/
+
     private Byte            radarType;
-    /**雷达上报数据*/
+
     private byte[]          data = new byte[4];
 
     public FunctionEnum getFunction() {
@@ -70,7 +70,7 @@ public class RadarProtocolData implements Serializable {
     }
 
     /**
-     * 创建一下新的指定function实例
+
      * @return
      */
     public static final RadarProtocolData newFunctionInstance(FunctionEnum function, byte[] data){
@@ -81,7 +81,7 @@ public class RadarProtocolData implements Serializable {
     }
 
     /**
-     * 创建一下新实例
+
      * @param id
      * @param function
      * @param data

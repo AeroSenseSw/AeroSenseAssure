@@ -9,7 +9,6 @@ public class ByteUtils {
     public static final int AFTER = 1;
 
     /**
-     * 打印16进制的字符串
      * @param str
      * @param bytes
      */
@@ -22,7 +21,6 @@ public class ByteUtils {
     }
 
     /**
-     * byte数组转16进制格式的字符串
      * @param src
      * @return
      */
@@ -43,7 +41,6 @@ public class ByteUtils {
     }
 
     /**
-     * 16进制格式的字符串转byte数组
      * @param hexString
      * @return
      */
@@ -67,11 +64,6 @@ public class ByteUtils {
     }
 
     /**
-     * 追加字节
-     * @param byteArr 原字节数组
-     * @param hex  需要追加的字节
-     * @param position  ByteUtils.BEFORE  在前面追加
-     *                  ByteUtils.AFTER   在后面追加
      * @return
      */
     public static byte[] appendByte(byte[] byteArr, byte hex, int position){
@@ -91,7 +83,6 @@ public class ByteUtils {
     }
 
     /**
-     * 用来拼接、合并byte数组（传入的列表元素至少有 2 个）
      * @param byteList
      * @return
      */
@@ -100,13 +91,11 @@ public class ByteUtils {
             return null;
         }
 
-        //统计所有字节数组总长度
         int length = 0;
         for (int i = 0; i < byteList.size(); i++){
             length += byteList.get(i).length;
         }
 
-        //拷贝数组到新的数组
         byte[] result = new byte[length];
         int currentIndex = 0;
         for (int j = 0; j < byteList.size(); j++){
@@ -121,13 +110,11 @@ public class ByteUtils {
             return null;
         }
 
-        //统计所有字节数组总长度
         int length = 0;
         for (int i = 0; i < byteList.length; i++){
             length += byteList[i].length;
         }
 
-        //拷贝数组到新的数组
         byte[] result = new byte[length];
         int currentIndex = 0;
         for (int j = 0; j < byteList.length; j++){
@@ -138,7 +125,6 @@ public class ByteUtils {
     }
 
     /**
-     * 将byte[]以字符串的形式打印出来
      * @param data
      * @param charset
      */
@@ -150,11 +136,6 @@ public class ByteUtils {
         }
     }
 
-    /**
-     * int到byte[] 由高位到低位
-     * @param i 需要转换为byte数组的整行值。
-     * @return byte数组
-     */
     public static byte[] intToBytesHigh2Low(int i) {
         byte[] result = new byte[4];
         result[0] = (byte) (i & 0xff);
@@ -164,11 +145,7 @@ public class ByteUtils {
         return result;
     }
 
-    /**
-     * int到byte[] 由底位到高位
-     * @param i 需要转换为byte数组的整行值。
-     * @return byte数组
-     */
+
     public static byte[] intToBytesLow2High(int i) {
         byte[] result = new byte[4];
         result[3] = (byte) (i & 0xff);
@@ -178,14 +155,10 @@ public class ByteUtils {
         return result;
     }
 
-    /**
-     * 将short转byte数组
-     * @param x
-     * @return
-     */
+
     public static byte[] short2ByteNew(short x){
-        byte high = (byte) (0x00FF & (x>>8));//定义第一个byte
-        byte low = (byte) (0x00FF & x);//定义第二个byte
+        byte high = (byte) (0x00FF & (x>>8));
+        byte low = (byte) (0x00FF & x);
         byte[] bytes = new byte[2];
         bytes[0] = high;
         bytes[1] = low;
@@ -193,7 +166,6 @@ public class ByteUtils {
     }
 
     /**
-     * byte数组倒置
      * @param arr
      * @return
      */
@@ -207,22 +179,10 @@ public class ByteUtils {
         return temp;
     }
 
-    /**
-     * byte数组转int
-     * @param bytes
-     * @return
-     */
-//    public static int byteToInt(byte[] bs) {
-//        int a = 0;
-//        for (int i = bs.length - 1; i >= 0; i--) {
-//            a += bs[i] * Math.pow(0xFF, bs.length - i - 1);
-//        }
-//        return a;
-//    }
     public static int byteToInt(byte[] bytes){
         int result = 0;
         if(bytes.length == 4){
-            int a = (bytes[0] & 0xff) << 24;//说明二
+            int a = (bytes[0] & 0xff) << 24;
             int b = (bytes[1] & 0xff) << 16;
             int c = (bytes[2] & 0xff) << 8;
             int d = (bytes[3] & 0xff);
@@ -232,50 +192,14 @@ public class ByteUtils {
     }
 
 
-//    public static int byteToInt(byte[] b, int index) {
-//        if (b == null) {
-//            throw new IllegalArgumentException("byte array is null!");
-//        }
-//        int l;
-//        l = b[index + 0];
-//        l &= 0xff;
-//        l |= ((long) b[index + 1] << 8);
-//        l &= 0xffff;
-//        l |= ((long) b[index + 2] << 16);
-//        l &= 0xffffff;
-//        l |= ((long) b[index + 3] << 24);
-//        return l;
-//    }
 
-    /**
-     * 将byte[]转short
-     * @param bytes
-     * @return
-     */
-//    public static short byte2shortNew(byte[] bytes){
-//        byte high = bytes[0];
-//        byte low = bytes[1];
-//        short z = (short)(((high & 0x00FF) << 8) | (0x00FF & low));
-//        return z;
-//    }
-
-    /**
-     * 从byte数组的index处的连续4个字节获得一个float
-     * @param arr
-     * @param index
-     * @return
-     */
     public static float byteToFloat(byte[] arr, int index) {
         return Float.intBitsToFloat(getInt(arr, index));
     }
 
-    /**
-     * 从byte数组的index处的连续4个字节获得一个float
-     * @param f
-     * @return
-     */
+
     public static byte[] floatToByte(float f) {
-        int intbits = Float.floatToIntBits(f);//将float里面的二进制串解释为int整数
+        int intbits = Float.floatToIntBits(f);
         return getByteArray(intbits);
     }
 
@@ -288,7 +212,6 @@ public class ByteUtils {
         return b;
     }
 
-    // 从byte数组的index处的连续4个字节获得一个int
     private static int getInt(byte[] arr, int index) {
         return 	(0xff000000 	& (arr[index+0] << 24))  |
                 (0x00ff0000 	& (arr[index+1] << 16))  |
@@ -298,7 +221,6 @@ public class ByteUtils {
 
 
     /**
-     * byte[] �?String UTF-8编码
      * @return
      * @throws UnsupportedEncodingException
      */
@@ -313,7 +235,6 @@ public class ByteUtils {
         }
         catch (UnsupportedEncodingException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return returnStr;
@@ -333,10 +254,10 @@ public class ByteUtils {
 
 
 //    /**
-//     * 16进制的字符串表示转成字节数组
+
 //     *
-//     * @param hexString 16进制格式的字符串
-//     * @return 转换后的字节数组
+
+
 //     **/
 //    public static byte[] toByteArray(String hexString) {
 //        if (ByteUtils.isEmpty(hexString))
@@ -349,7 +270,7 @@ public class ByteUtils {
 //        hexString = hexString.toLowerCase();
 //        final byte[] byteArray = new byte[hexString.length() / 2];
 //        int k = 0;
-//        for (int i = 0; i < byteArray.length; i++) {//因为是16进制，最多只会占用4位，转换成字节需要两个16进制的字符，高位在先
+
 //            byte high = (byte) (Character.digit(hexString.charAt(k), 16) & 0xFF);
 //            byte low = (byte) (Character.digit(hexString.charAt(k + 1), 16) & 0xFF);
 //            byteArray[i] = (byte) (high << 4 | low);
@@ -366,7 +287,7 @@ public class ByteUtils {
 //    }
 //
 //    /**
-//     * 向串口发送数据转为字节数组
+
 //     */
 //    private static byte byteHade[] = {(byte) 0xAA, (byte) 0xAA, (byte) 0x55, (byte) 0x55};
 //
@@ -385,10 +306,10 @@ public class ByteUtils {
 //    }
 //
     /**
-     * 字节数组转成16进制表示格式的字符串
+
      *
-     * @param byteArray 需要转换的字节数组 大端输入转小端，小端输入转大端
-     * @return 16进制表示格式的字符串, 小端排序(大端输入转小端 ， 小端输入转大端)
+
+
      **/
     public static byte[] toLowcase(byte byteArray[]) {
         if (byteArray.length == 12) {
@@ -427,10 +348,10 @@ public class ByteUtils {
     }
 //
 //    /**
-//     * 字节数组转成16进制表示格式的字符串
+
 //     *
-//     * @param byteArray 需要转换的字节数组
-//     * @return 16进制表示格式的字符串
+
+
 //     **/
 //    public static String toHexString(byte[] byteArray) {
 //
@@ -443,7 +364,7 @@ public class ByteUtils {
 //        byte temp0[] = new byte[4];
 //        byte temp3[] = new byte[12];
 //        for (int i = 0, j = 0; i < byteArray.length - 8 && j < 4; i++, j++) {
-//          /*  if ((byteArray[i] & 0xff) < 0x10)//0~F前面不零
+
 //                hexString.append("0");
 //            hexString.append(Integer.toHexString(0xFF & byteArray[i]));*/
 //       /*     hexString.append(_16[byteArray[i] >> 4 & 0xf])
@@ -451,7 +372,7 @@ public class ByteUtils {
 //            temp0[j] = byteArray[i];
 //        }
 //        for (int i = 11, j = 0; i > 7 && j < 4; i--, j++) {
-//          /*  if ((byteArray[i] & 0xff) < 0x10)//0~F前面不零
+
 //                hexString.append("0");
 //            hexString.append(Integer.toHexString(0xFF & byteArray[i]));*/
 //       /*     hexString.append(_16[byteArray[i] >> 4 & 0xf])
@@ -459,7 +380,7 @@ public class ByteUtils {
 //            temp2[j] = byteArray[i];
 //        }
 //        for (int i = 7, j = 0; i > 3 && j < 4; i--, j++) {
-//          /*  if ((byteArray[i] & 0xff) < 0x10)//0~F前面不零
+
 //                hexString.append("0");
 //            hexString.append(Integer.toHexString(0xFF & byteArray[i]));*/
 //       /*     hexString.append(_16[byteArray[i] >> 4 & 0xf])
@@ -468,7 +389,7 @@ public class ByteUtils {
 //        }
 //        temp3 = byteMerger(byteMerger(temp0, temp1), temp2);
 //        for (int i = 0; i < temp3.length; i++) {
-//          /*  if ((byteArray[i] & 0xff) < 0x10)//0~F前面不零
+
 //                hexString.append("0");
 //            hexString.append(Integer.toHexString(0xFF & byteArray[i]));*/
 //            hexString.append(_16[temp3[i] >> 4 & 0xf])
@@ -479,14 +400,14 @@ public class ByteUtils {
 //    }
 //
 //    /**
-//     * 浮点转换为字节
+
 //     *
 //     * @param f
 //     * @return
 //     */
 //    public static byte[] float2byte(float f) {
 //
-//        // 把float转换为byte[]
+
 //        int fbit = Float.floatToIntBits(f);
 //
 //        byte[] b = new byte[4];
@@ -494,14 +415,14 @@ public class ByteUtils {
 //            b[i] = (byte) (fbit >> (24 - i * 8));
 //        }
 //
-//        // 翻转数组
+
 //        int len = b.length;
-//        // 建立一个与源数组元素类型相同的数组
+
 //        byte[] dest = new byte[len];
-//        // 为了防止修改源数组，将源数组拷贝一份副本
+
 //        System.arraycopy(b, 0, dest, 0, len);
 //        byte temp;
-//        // 将顺位第i个与倒数第i个交换
+
 //        for (int i = 0; i < len / 2; ++i) {
 //            temp = dest[i];
 //            dest[i] = dest[len - i - 1];
@@ -513,10 +434,10 @@ public class ByteUtils {
 //    }
 //
 //    /**
-//     * 字节转换为浮点
+
 //     *
-//     * @param b     字节（至少4个字节）
-//     * @param index 开始位置
+
+
 //     * @return
 //     */
 //    public static float byte2float(byte[] b, int index) {
@@ -549,10 +470,10 @@ public class ByteUtils {
 //    }
 //
 //    /**
-//     * int到byte[] 由高位到低位
+
 //     *
-//     * @param i 需要转换为byte数组的整行值。
-//     * @return byte数组
+
+
 //     */
 //    public static byte[] intToByteArray(int i) {
 //        byte[] result = new byte[4];
@@ -565,7 +486,7 @@ public class ByteUtils {
 //
 //
     /**
-     * 数组合并
+
      *
      * @param bt1
      * @param bt2
@@ -579,7 +500,7 @@ public class ByteUtils {
     }
 //
 //    /**
-//     * int值转换为ip
+
 //     *
 //     * @param addr
 //     * @return

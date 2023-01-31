@@ -4,7 +4,7 @@ package com.aerosense.radar.tcp.serilazer;
 import com.alipay.remoting.serialization.SerializerManager;
 
 /**
- * Created with IntelliJ IDEA.
+ * 
  *
  * @author： jia.wu
  * @date： 2021/8/4 11:30

@@ -27,7 +27,7 @@ public class ResponseResult {
 
     public ResponseResult(int function, int msg) {
         this.code = function;
-        this.msg = msg == 1 ? "成功" : "失败";
+
         this.obj = msg;
     }
 

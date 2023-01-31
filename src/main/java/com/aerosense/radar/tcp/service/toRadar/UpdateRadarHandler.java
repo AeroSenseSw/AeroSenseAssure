@@ -53,9 +53,9 @@ public class UpdateRadarHandler {
     }
 
     /**
-     * data 为固件大小
+
      *
-     * @param protocolData 参数
+
      */
     private boolean notifyUpdate(RadarProtocolData protocolData, String path) throws RemotingException, InterruptedException {
         RadarProtocolData radarProtocolData = (RadarProtocolData) radarTcpServer.invokeSync(radarTcpServer.getRadarAddress(protocolData.getRadarId()),
@@ -95,7 +95,7 @@ public class UpdateRadarHandler {
                 } else {
                     System.arraycopy(firmwareFile, start, bytes, 0, firmwareFile.length - start);
                 }
-                //写
+
                 byte[] crcBytes = ByteUtils.hexStringToBytes(CRC16.getCRC16(bytes));
                 sendBytes = new byte[bytes.length + crcBytes.length];
                 //copy bytes
@@ -107,11 +107,11 @@ public class UpdateRadarHandler {
                         protocolData, invokeContext, RequestTimeOut.TIME_OUT);
 
                 if (radarProtocolData.getFunction() != FunctionEnum.issueFirmware || radarProtocolData.getData()[3] != 1) {
-                    log.error("第 {} 段数据传输失败", i);
+
                     for (int j = 0; j < 3; j++) {
                         radarProtocolData = (RadarProtocolData) radarTcpServer.invokeSync(radarTcpServer.getRadarAddress(protocolData.getRadarId()),
                                 protocolData, invokeContext, RequestTimeOut.TIME_OUT);
-                        log.error("重试...");
+
                     }
                 } else {
                     i++;
@@ -141,13 +141,13 @@ public class UpdateRadarHandler {
                 }
             }
         } catch (RemotingException | InterruptedException e) {
-            log.error("检查升级是否成功时失败，{}", e.getMessage());
+
             return false;
         } finally {
             byteBuf.release();
         }
 //        responseResult.setCode(Short.toUnsignedInt(FunctionEnum.updateResult.getFunction()));
-//        responseResult.setMsg("检查升级是否成功时失败");
+
 //        WebsocketSendMsg.sendMessage(responseResult);
         return false;
     }

@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 
 /**
- * Created with IntelliJ IDEA.
+ * 
  *
  * @author： jia.wu
  * @date： 2021/8/6 10:41
@@ -45,12 +45,12 @@ public class RadarProtocolDataServerAsyncProcessor extends AsyncUserProcessor<Ra
             log.debug("request: {}", radarProtocolData);
         }
         Connection connection = bizContext.getConnection();
-        /**注册雷达，绑定雷达id到Connection*/
+
         registerRadarOnFirstRadarReport(bizContext, radarProtocolData);
-        /**填充绑定的数据*/
+
         boolean filled = ConnectionUtil.fillBindData(connection, radarProtocolData);
         if(!filled) {
-            //没有找到注册绑定数据，等待注册绑定
+
             return;
         }
         RadarProtocolDataHandler handler = RadarProtocolDataHandlerManager.getHandler(radarProtocolData.getFunction());
@@ -59,7 +59,7 @@ public class RadarProtocolDataServerAsyncProcessor extends AsyncUserProcessor<Ra
                 log.warn("no handler response: null {} {}", radarProtocolData.getRadarId(),
                         radarProtocolData.getFunction());
             }
-            //返回请求失败
+
             radarProtocolData.setData(Ints.toByteArray(0));
             asyncContext.sendResponse(radarProtocolData);
             return;
@@ -78,7 +78,7 @@ public class RadarProtocolDataServerAsyncProcessor extends AsyncUserProcessor<Ra
     }
 
     /**
-     * 雷达注册keepAlive处理
+
      * @param bizContext
      * @param radarProtocolData
      */
@@ -90,7 +90,7 @@ public class RadarProtocolDataServerAsyncProcessor extends AsyncUserProcessor<Ra
                 log.warn("register radar failure, remote address parse to be null");
                 return;
             }
-            //解析雷达注册信息，包含雷达类型（1个字节）、雷达版本（4个字节）、雷达id三个字段
+
             byte[] data = radarProtocolData.getData();
             byte type = data[0];
             String version = getHardwareVersion(Arrays.copyOfRange(data, 1, 5));
@@ -103,7 +103,7 @@ public class RadarProtocolDataServerAsyncProcessor extends AsyncUserProcessor<Ra
     }
 
     /**
-     * 获取雷达固件版本
+
      * @param bytes
      * @return
      */
@@ -112,11 +112,11 @@ public class RadarProtocolDataServerAsyncProcessor extends AsyncUserProcessor<Ra
             return "unknown";
         }
         StringBuilder version = new StringBuilder();
-        //将每个字节转换成Int
+
         byte[] temp = new byte[4];
         for (int i = 0,len = bytes.length; i < len; i++){
             temp[3] = bytes[i];
-            //如果是个位数前补零
+
             String hexString = String.format("%02d", ByteUtil.byte4ToInt(temp));
             version.append(hexString).append(".");
         }

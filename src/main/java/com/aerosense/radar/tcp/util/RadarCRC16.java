@@ -3,7 +3,7 @@ package com.aerosense.radar.tcp.util;
 import java.nio.ByteBuffer;
 
 /**
- * 与雷达对应的crc16工具类
+
  * @author jia.wu
  */
 public class RadarCRC16 {
@@ -87,9 +87,9 @@ public class RadarCRC16 {
     }
 
     /**
-     * 查表法计算CRC16校验
+
      *
-     * @param data 需要计算的字节数组
+
      */
     public static byte[] getCRC(byte[] data) {
         byte[] crc16_h = {
@@ -141,7 +141,7 @@ public class RadarCRC16 {
         }
 
         crc = ((ucCRCHi & 0x00ff) << 8) | (ucCRCLo & 0x00ff) & 0xffff;
-        //高低位互换，输出符合相关工具对Modbus CRC16的运算
+
         crc = ( (crc & 0xFF00) >> 8) | ( (crc & 0x00FF ) << 8);
         byte[] temp = ByteUtil.intToByteBig(crc);
         return new byte[]{temp[2], temp[3]};

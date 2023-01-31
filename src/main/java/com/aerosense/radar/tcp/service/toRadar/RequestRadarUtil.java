@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 /**
- * 请求雷达工具类，直接调用工具方法完成调用雷达
+
  * @author jia.wu
  */
 @Component
@@ -28,7 +28,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 调用雷达，内部动态寻址雷达连接的服务器地址
+
      *
      * @param radarProtocolData
      * @return
@@ -40,7 +40,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 调用雷达，内部动态寻址雷达连接的服务器地址
+
      *
      * @param radarProtocolData
      * @param timeoutMills
@@ -66,7 +66,7 @@ public class RequestRadarUtil {
 
 
     /**
-     * 获取防摔雷达工作距离
+
      *
      * @param radarId
      * @return
@@ -80,7 +80,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 设置防摔雷达工作距离
+
      *
      * @param radarId
      * @param workRange
@@ -103,7 +103,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 获取防摔雷达安装高度
+
      *
      * @param radarId
      * @return
@@ -117,7 +117,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 设置防摔雷达安装高度
+
      *
      * @param radarId
      * @param installHeight
@@ -125,11 +125,11 @@ public class RequestRadarUtil {
      * @throws RemotingException
      */
     public static boolean setInstallHeight(String radarId,  float installHeight) throws RemotingException {
-        //非精度问题设置值不合法
+
         if (installHeight < 1.2f || installHeight > 2.4f) {
             throw new IllegalArgumentException("install height value invalid : " + installHeight);
         }
-        //精度问题设置值覆盖为默认值
+
         if(installHeight < RadarProtocolConsts.INSTALL_HEIGHT_1_4){
             installHeight = RadarProtocolConsts.INSTALL_HEIGHT_1_4;
         }else if(installHeight > RadarProtocolConsts.INSTALL_HEIGHT_2_2){
@@ -142,7 +142,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 获取防摔雷达摔倒上报时间间隔
+
      *
      * @param radarId
      * @return
@@ -156,7 +156,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 设置防摔雷达摔倒上报时间间隔
+
      *
      * @param radarId
      * @param fallReportTimer
@@ -175,7 +175,7 @@ public class RequestRadarUtil {
 
 
     /**
-     * 设置防摔雷达热力图开关
+
      *
      * @param radarId
      * @return
@@ -192,7 +192,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 获取防摔雷达热力图开关  true：开   false：关
+
      *
      * @param radarId
      * @return
@@ -206,7 +206,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 获取防摔雷达入侵报警开关  true：开   false：关
+
      *
      * @param radarId
      * @return
@@ -220,7 +220,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 开始门位置学习
+
      * @param radarId
      * @return
      * @throws RemotingException
@@ -234,7 +234,7 @@ public class RequestRadarUtil {
     }
 
     /**
-     * 结束门位置学习
+
      * @param radarId
      * @throws RemotingException
      * @return

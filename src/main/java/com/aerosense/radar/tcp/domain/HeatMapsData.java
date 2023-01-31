@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * 热力图数据
+
  * @author jia.wu
  */
 public class HeatMapsData implements Serializable {

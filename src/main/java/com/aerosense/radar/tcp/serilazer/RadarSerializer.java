@@ -25,7 +25,7 @@ public class RadarSerializer implements Serializer {
         if(object==null){
             return EMPTY_ARRAY;
         }if(object instanceof byte[]){
-            //原始数据已经是字节数组，直接发送源数据
+
             return (byte[]) object;
         }else if (object instanceof RadarProtocolData) {
             RadarProtocolData protocolData = (RadarProtocolData) object;
@@ -68,7 +68,7 @@ public class RadarSerializer implements Serializer {
                     radarProtocolData.setData(data);
                 }
             } else {
-                //不能解析为RadarProtocolData协议数据，返回原始数据
+
                 radarProtocolData.setFunction(FunctionEnum.UNDEFINED);
                 radarProtocolData.setData(bytes);
             }
@@ -77,7 +77,7 @@ public class RadarSerializer implements Serializer {
     }
 
     /**
-     * 大端序解析short为2字节数组
+
      * @param value
      * @return
      */
@@ -86,7 +86,7 @@ public class RadarSerializer implements Serializer {
     }
 
     /**
-     * 大端序解析2字节为short
+
      * @param b1
      * @param b2
      * @return

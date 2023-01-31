@@ -8,9 +8,9 @@ package com.aerosense.radar.tcp.util;
 public class CRC16 {
 
     public static String getCRC16(byte[] bytes) {
-        //CRC寄存器全为1
+
         int CRC = 0x0000ffff;
-        //多项式校验值
+
         int POLYNOMIAL = 0x0000a001;
         int i, j;
         for (i = 0; i < bytes.length; i++) {
@@ -24,15 +24,15 @@ public class CRC16 {
                 }
             }
         }
-        //结果转换为16进制
+
         String result = Integer.toHexString(CRC).toUpperCase();
         if (result.length() != 4) {
             StringBuilder sb = new StringBuilder("0000");
             result = sb.replace(4 - result.length(), 4, result).toString();
         }
-        //交换高低位
-        //return result.substring(2, 4) + result.substring(0, 2);//低前高后
-        return result;//高位在前，低位在后
+
+        return result;
+
     }
 
 }
