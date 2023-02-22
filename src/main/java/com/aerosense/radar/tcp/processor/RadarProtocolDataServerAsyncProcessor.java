@@ -41,17 +41,14 @@ public class RadarProtocolDataServerAsyncProcessor extends AsyncUserProcessor<Ra
 
     @Override
     public void handleRequest(BizContext bizContext, AsyncContext asyncContext, RadarProtocolData radarProtocolData) {
-        if (log.isDebugEnabled()) {
-            log.debug("request: {}", radarProtocolData);
-        }
         Connection connection = bizContext.getConnection();
-
         registerRadarOnFirstRadarReport(bizContext, radarProtocolData);
-
         boolean filled = ConnectionUtil.fillBindData(connection, radarProtocolData);
         if(!filled) {
-
             return;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("request: {}", radarProtocolData);
         }
         RadarProtocolDataHandler handler = RadarProtocolDataHandlerManager.getHandler(radarProtocolData.getFunction());
         if (handler == null) {
