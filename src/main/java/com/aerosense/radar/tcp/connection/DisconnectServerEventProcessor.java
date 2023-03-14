@@ -25,7 +25,7 @@ public class DisconnectServerEventProcessor implements ConnectionEventProcessor 
             log.warn("this connection is not from radar, address: {}", address);
             return;
         }
-        radarAddressMap.unbindAddress(address, radarId.toString());
+        radarAddressMap.unbindAddress(radarId.toString(), address);
         log.info("unregister radar successful {}  -  {}", radarId, address);
     }
 }
