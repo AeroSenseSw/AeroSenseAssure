@@ -1,154 +1,170 @@
 package com.aerosense.radar.tcp.service.toRadar;
 
-import com.aerosense.radar.tcp.protocol.http.ResponseCode;
-import com.aerosense.radar.tcp.protocol.http.ResponseResult;
-import com.aerosense.radar.tcp.serilazer.RadarSerializer;
-import com.aerosense.radar.tcp.server.RadarTcpServer;
-import com.aerosense.radar.tcp.util.ByteUtils;
-import com.alipay.remoting.InvokeContext;
-import com.alipay.remoting.exception.RemotingException;
-import com.aerosense.radar.tcp.config.RequestTimeOut;
 import com.aerosense.radar.tcp.protocol.FunctionEnum;
 import com.aerosense.radar.tcp.protocol.RadarProtocolData;
-import com.aerosense.radar.tcp.util.CRC16;
-import com.aerosense.radar.tcp.util.ReadFirmware;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.PooledByteBufAllocator;
+import com.aerosense.radar.tcp.server.RadarTcpServer;
+import com.aerosense.radar.tcp.util.ByteUtil;
+import com.aerosense.radar.tcp.util.RadarCRC16;
+import com.alipay.remoting.exception.RemotingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
+import org.springframework.util.StreamUtils;
 
 import java.io.File;
-import java.util.concurrent.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 /**
- * @author ：ywb
- * @date ：Created in 2022/1/8 13:37
- * @modified By：
+ * @description: update radar firmware handler
+ * @author jia.wu
+ * @date 2023/3/20 16:05
+ * @version 1.0.0
  */
 @Slf4j
 @Service
 public class UpdateRadarHandler {
+    /**
+     * retry count
+     */
+    private static final int RETRY_COUNT = 2;
+    /**
+     * Frame length
+     */
+    private static final int FRAME_LENGTH = 1000;
 
     @Autowired
     private RadarTcpServer radarTcpServer;
-    @Autowired
-    private ReadFirmware readFirmware;
-
-    private final static InvokeContext invokeContext = new InvokeContext();
-
-    static {
-        invokeContext.put(InvokeContext.BOLT_CUSTOM_SERIALIZER, RadarSerializer.IDX_BYTE);
-    }
-
-    public Object process(RadarProtocolData protocolData, String path) {
-        try {
-            boolean update = notifyUpdate(protocolData, path);
-            System.out.println(update);
-            return new ResponseResult(update ? ResponseCode.Success : ResponseCode.Fail);
-        } catch (RemotingException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     /**
-
-     *
-
+     * Process update radar firmware by file path
+     * @param radarId
+     * @param firmwareFilePath
+     * @return
      */
-    private boolean notifyUpdate(RadarProtocolData protocolData, String path) throws RemotingException, InterruptedException {
-        RadarProtocolData radarProtocolData = (RadarProtocolData) radarTcpServer.invokeSync(radarTcpServer.getRadarAddress(protocolData.getRadarId()),
-                protocolData, invokeContext, RequestTimeOut.TIME_OUT);
-        ByteBuf buf = PooledByteBufAllocator.DEFAULT.heapBuffer();
+    public boolean process(String radarId, String firmwareFilePath) {
         try {
-            buf.writeBytes(radarProtocolData.getData());
-            int success = buf.readInt();
-            boolean notifyOk = radarProtocolData.getFunction() == FunctionEnum.notifyUpdate && success == 1;
-            if (notifyOk) {
-                return updateFrame(protocolData, path);
-            }
-        } finally {
-            buf.release();
+            File file = ResourceUtils.getFile(firmwareFilePath);
+            byte[] firmwareFileBytes = StreamUtils.copyToByteArray(new FileInputStream(file));
+            return process(radarId, firmwareFileBytes);
+        } catch (IOException e) {
+            log.error("Read radar firmware file fail "+firmwareFilePath, e);
         }
         return false;
     }
-    private boolean updateFrame(RadarProtocolData protocolData, String path) {
-        File file = new File(path);
-        return updateFrameFile(protocolData,file);
-    }
-    private boolean updateFrameFile(RadarProtocolData protocolData, File file) {
-        protocolData.setFunction(FunctionEnum.issueFirmware);
-        byte[] firmwareFile = readFirmware.readFile(file);
-        int count = (int) Math.ceil(firmwareFile.length / 240f);
-        final int frameLen = 240;
-        int start = 0;
-        int i = 0;
-        byte[] bytes;
-        byte[] sendBytes;
-        RadarProtocolData radarProtocolData;
+
+    /**
+     * Process update radar firmware
+     * @param radarId
+     * @param firmwareBytes
+     * @return
+     */
+    public boolean process(String radarId, byte[] firmwareBytes) {
         try {
-            while (i < count) {
-                bytes = new byte[frameLen];
-                if (firmwareFile.length - start >= 240) {
-                    System.arraycopy(firmwareFile, start, bytes, 0, bytes.length);
-                } else {
-                    System.arraycopy(firmwareFile, start, bytes, 0, firmwareFile.length - start);
-                }
-
-                byte[] crcBytes = ByteUtils.hexStringToBytes(CRC16.getCRC16(bytes));
-                sendBytes = new byte[bytes.length + crcBytes.length];
-                //copy bytes
-                System.arraycopy(bytes, 0, sendBytes, 0, bytes.length);
-                //copy crcBytes
-                System.arraycopy(crcBytes, 0, sendBytes, bytes.length, crcBytes.length);
-                protocolData.setData(sendBytes);
-                radarProtocolData = (RadarProtocolData) radarTcpServer.invokeSync(radarTcpServer.getRadarAddress(protocolData.getRadarId()),
-                        protocolData, invokeContext, RequestTimeOut.TIME_OUT);
-
-                if (radarProtocolData.getFunction() != FunctionEnum.issueFirmware || radarProtocolData.getData()[3] != 1) {
-
-                    for (int j = 0; j < 3; j++) {
-                        radarProtocolData = (RadarProtocolData) radarTcpServer.invokeSync(radarTcpServer.getRadarAddress(protocolData.getRadarId()),
-                                protocolData, invokeContext, RequestTimeOut.TIME_OUT);
-
-                    }
-                } else {
-                    i++;
-                    start += 240;
-
-                }
-            }
+            boolean update = notifyUpdate(radarId, firmwareBytes);
+            log.debug("notify firmware update result {} - {}", radarId, update);
+            return update;
         } catch (RemotingException | InterruptedException e) {
-            e.printStackTrace();
-            return false;
+            log.error("do update radar firmware fail "+radarId, e);
         }
-        return checkUpdate(protocolData);
+        return false;
     }
-    private boolean checkUpdate(RadarProtocolData protocolData) {
+
+
+    /**
+     * Notify radar to prepare update and do update frame
+     * @param radarId
+     * @param firmwareBytes
+     * @return
+     * @throws RemotingException
+     * @throws InterruptedException
+     */
+    private boolean notifyUpdate(String radarId, byte[] firmwareBytes )
+            throws RemotingException, InterruptedException {
+        byte[] firmwareLength = ByteUtil.intToByteBig(firmwareBytes.length);
+        RadarProtocolData protocolData = RadarProtocolData.newInstance(radarId, FunctionEnum.notifyUpdate, firmwareLength);
+        boolean notifyOk = retryInvokeRadar(protocolData, 15000);
+        if (notifyOk) {
+            return updateFrameBytes(protocolData, firmwareBytes);
+        }
+        return false;
+    }
+
+    /**
+     * update rame
+     * @param protocolData
+     * @param firmwareBytes
+     * @return
+     */
+    private boolean updateFrameBytes(RadarProtocolData protocolData, byte[] firmwareBytes) {
+        protocolData.setFunction(FunctionEnum.issueFirmware);
+        int blockCount = (firmwareBytes.length / FRAME_LENGTH) + (firmwareBytes.length % FRAME_LENGTH > 0 ? 1 : 0);
+        log.debug("Updating frame all block count {}", blockCount);
+        for (int i=0; i < blockCount; i++) {
+            int blockIndex = i + 1;
+            int startIndex = i * FRAME_LENGTH;
+            int endIndex =  blockIndex * FRAME_LENGTH;
+            //last frame may be less than frame length
+            if (endIndex > firmwareBytes.length) {
+                endIndex = firmwareBytes.length;
+            }
+            byte[] blockData = Arrays.copyOfRange(firmwareBytes, startIndex, endIndex);
+            int blockCrc16 = RadarCRC16.crc16BaseRadar(blockData);
+            byte[] crc16Bytes = ByteUtil.shortToByteLittle((short) blockCrc16);
+            byte[] sendBytes = new byte[blockData.length + crc16Bytes.length];
+            //copy bytes
+            System.arraycopy(blockData, 0, sendBytes, 0, blockData.length);
+            //copy crcBytes
+            System.arraycopy(crc16Bytes, 0, sendBytes, blockData.length, crc16Bytes.length);
+            protocolData.setData(sendBytes);
+            log.debug("Updating frame block index {}", blockIndex);
+            boolean updateFrameResult  = retryInvokeRadar(protocolData, 10000);
+            if (!updateFrameResult){
+                return false;
+            }
+        }
+        return checkUpdateResult(protocolData);
+    }
+
+    /**
+     * Check the update result
+     * @param protocolData
+     * @return
+     */
+    private boolean checkUpdateResult(RadarProtocolData protocolData) {
         protocolData.setFunction(FunctionEnum.updateResult);
         protocolData.setData(new byte[4]);
-        ByteBuf byteBuf = PooledByteBufAllocator.DEFAULT.heapBuffer();
-        try {
-            for (int i = 0; i < 5; i++) {
-                TimeUnit.SECONDS.sleep(2);
-                RadarProtocolData updateResult = (RadarProtocolData) radarTcpServer.invokeSync(radarTcpServer.getRadarAddress(protocolData.getRadarId()),
-                        protocolData, invokeContext, RequestTimeOut.TIME_OUT);
-                byteBuf.writeBytes(updateResult.getData());
-                boolean b = byteBuf.readInt() == 1;
-                if (b) {
+        return retryInvokeRadar(protocolData, 20000);
+    }
+
+    /**
+     * Retry invoke the radar
+     * @param protocolData
+     * @param timeoutMillis
+     * @return
+     */
+    private boolean retryInvokeRadar(RadarProtocolData protocolData, int timeoutMillis) {
+        for (int i = 0; i <= RETRY_COUNT; i++) {
+            try {
+                RadarProtocolData retProtocolData = (RadarProtocolData) radarTcpServer.invokeSync(protocolData, timeoutMillis);
+                if (retProtocolData.getData()[3]!=0 && retProtocolData.getData()[3]!=1){
+                    log.warn("Radar return data error {}", retProtocolData);
                     return true;
                 }
+                return retProtocolData.getFunction() == protocolData.getFunction() &&
+                        ByteUtil.bytes2IntBig(retProtocolData.getData()) == 1;
+            } catch (RemotingException | InterruptedException e) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException ex) {
+
+                }
+                log.error("invoke radar exception", e);
             }
-        } catch (RemotingException | InterruptedException e) {
-
-            return false;
-        } finally {
-            byteBuf.release();
         }
-//        responseResult.setCode(Short.toUnsignedInt(FunctionEnum.updateResult.getFunction()));
-
-//        WebsocketSendMsg.sendMessage(responseResult);
         return false;
     }
 }
