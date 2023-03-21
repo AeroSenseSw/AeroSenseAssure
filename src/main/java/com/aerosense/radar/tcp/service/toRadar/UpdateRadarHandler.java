@@ -152,7 +152,6 @@ public class UpdateRadarHandler {
                 RadarProtocolData retProtocolData = (RadarProtocolData) radarTcpServer.invokeSync(protocolData, timeoutMillis);
                 if (retProtocolData.getData()[3]!=0 && retProtocolData.getData()[3]!=1){
                     log.warn("Radar return data error {}", retProtocolData);
-                    return true;
                 }
                 return retProtocolData.getFunction() == protocolData.getFunction() &&
                         ByteUtil.bytes2IntBig(retProtocolData.getData()) == 1;
