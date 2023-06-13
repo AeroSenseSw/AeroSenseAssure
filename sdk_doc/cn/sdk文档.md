@@ -9,7 +9,7 @@
 ![img.png](img/process_request.svg)
 
 ```java
-package com.aerosense.radar.tcp.service.fromRadar;
+package com.radar.fall.tcp.service.fromRadar;
 
 import com.google.common.collect.Sets;
 import RadarProtocolDataHandler;
@@ -51,7 +51,7 @@ public class CreateConnectionHandler implements RadarProtocolDataHandler {
 
 ### 1：clone此工程
 ### 2：实现FunctionEnum中定义的雷达发送的命令函数handler，打上@Service注解注入到spring容器，处理相应的业务逻辑。
-（此示例工程已经给出了几个handler实现，在com.aerosense.radar.tcp.service.fromRadar包下，相关报警逻辑需要自己实现)
+（此示例工程已经给出了几个handler实现，在com.radar.fall.tcp.service.fromRadar包下，相关报警逻辑需要自己实现)
 ### 3: 查看[README.md](../../README.md)文档，运行应用程序
 
 ## 三、服务端主动发送数据给雷达

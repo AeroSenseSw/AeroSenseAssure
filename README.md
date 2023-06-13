@@ -1,6 +1,6 @@
-Radar Assure Java SDK
+Radar Fall Java SDK
 ======================
-Radar Assure Java SDK is a Spring Boot application, this application will listen on port 8899 and accept a TCP socket connection.
+Radar Fall Java SDK is a Spring Boot application, this application will listen on port 8899 and accept a TCP socket connection.
 Compiling this project requires java8、 Maven3 or later, or you can import to the IDE then run it.
 
 **!!! important !!!**
