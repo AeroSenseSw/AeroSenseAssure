@@ -205,6 +205,17 @@ public class RequestRadarUtil {
         return ByteUtil.byte4ToInt(retObj.getData()) == 1;
     }
 
+
+    public static boolean setInvadeEnable(String radarId, int status) throws RemotingException {
+        if (status != 0 && status != 1) {
+            throw new IllegalArgumentException("status value must 0 or 1");
+        }
+        RadarProtocolData radarProtocolData = RadarProtocolData.newInstance(radarId,
+                FunctionEnum.SetInvadeEnable, ByteUtil.intToByteBig(status));
+        RadarProtocolData retObj = invokeToRadar(radarProtocolData, 5000);
+        return ByteUtil.bytes2IntBig(retObj.getData()) == RadarProtocolConsts.RET_SUCCESS;
+    }
+
     /**
 
      *
