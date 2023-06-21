@@ -27,7 +27,7 @@ public class RadarTcpServerProperties implements Serializable {
 
     private String host = "0.0.0.0";
 
-    private int port = 8899;
+    private int port = 8802;
 
     private long idleTimeout = 90000;
 

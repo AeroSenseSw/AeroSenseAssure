@@ -17,3 +17,4 @@ src/main/java/com/aerosense/radar/tcp/config/RadarTcpServerProperties.java
 
 ## Run the Upgrade Firmware test
 > mvn test -Dtest=UpdateRadarHandlerTest
+Please notice that network environment factors may cause the upgrade to fail. In this case, please try several times.
