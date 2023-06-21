@@ -12,5 +12,8 @@ Run `mvn clean install spring-boot:run` in the project root directory. The serve
 ## Running the project from your IDE
 Navigate to the `Application` class and run it as a Java application.
 
+## Where to change config of server?
+src/main/java/com/aerosense/radar/tcp/config/RadarTcpServerProperties.java
+
 ## Run the Upgrade Firmware test
 > mvn test -Dtest=UpdateRadarHandlerTest
