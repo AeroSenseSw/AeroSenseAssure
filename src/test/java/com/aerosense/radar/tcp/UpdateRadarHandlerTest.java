@@ -29,7 +29,10 @@ public class UpdateRadarHandlerTest {
 
     @Test
     public void testUpdateRadar() throws InterruptedException, RemotingException, IOException {
+        // Windows Style
         String firmwareFilePath = "D:\\develop\\resources\\aerosense\\firmware\\antifall_radar\\AeroSense.Tcp.A.Release.1.7.4.42.bin";
+        // Unix Style
+        // String firmwareFilePath = "/home/username/Documents/fall.1.7.4.46.bin";
         Set<String> onlineRadarList = radarTcpServer.getOnlineRadarList();
         while (onlineRadarList.isEmpty()){
             log.info("Wait a radar connect server");
