@@ -47,6 +47,8 @@ public enum FunctionEnum {
 
     PositionStudy(0x0010),
 
+    NegFallDetect(0x0011),
+
     softReboot(0x0411),
     /**
 

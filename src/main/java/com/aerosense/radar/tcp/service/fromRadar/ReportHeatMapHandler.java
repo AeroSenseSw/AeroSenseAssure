@@ -1,8 +1,8 @@
 package com.aerosense.radar.tcp.service.fromRadar;
 
 import com.aerosense.radar.tcp.domain.HeatMapsData;
+import com.aerosense.radar.tcp.handler.base.RadarProtocolDataHandler;
 import com.google.common.collect.Sets;
-import com.aerosense.radar.tcp.hander.base.RadarProtocolDataHandler;
 import com.aerosense.radar.tcp.protocol.FunctionEnum;
 import com.aerosense.radar.tcp.protocol.RadarProtocolData;
 import lombok.extern.slf4j.Slf4j;

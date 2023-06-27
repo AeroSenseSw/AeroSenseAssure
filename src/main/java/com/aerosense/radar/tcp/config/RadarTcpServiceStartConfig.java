@@ -1,6 +1,6 @@
 package com.aerosense.radar.tcp.config;
 
-import com.aerosense.radar.tcp.hander.base.RadarProtocolDataHandler;
+import com.aerosense.radar.tcp.handler.base.RadarProtocolDataHandler;
 import com.aerosense.radar.tcp.server.RadarTcpServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
