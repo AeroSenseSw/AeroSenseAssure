@@ -49,6 +49,12 @@ public enum FunctionEnum {
 
     NegFallDetect(0x0011),
 
+    SetMachineLearning(0x0015),
+
+    GetMachineLearning(0x0016),
+
+    EliminateFallDetection(0x0017),
+
     softReboot(0x0411),
     /**
 
