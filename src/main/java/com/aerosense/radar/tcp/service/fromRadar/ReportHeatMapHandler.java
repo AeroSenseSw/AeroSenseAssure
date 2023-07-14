@@ -56,6 +56,8 @@ public class ReportHeatMapHandler  implements RadarProtocolDataHandler {
         // TODO process the heat map data
         System.out.println("radar heat map data "+heatMapsData);
         System.out.println("process the heat map data you want to");
+        System.out.println(("radar ID: "+protocolData.getRadarId()+ "radar Version: "+protocolData.getRadarVersion()));
+
         return null;
     }
 

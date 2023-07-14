@@ -49,6 +49,8 @@ public enum FunctionEnum {
 
     NegFallDetect(0x0011),
 
+    Register(0x0012),
+
     SetMachineLearning(0x0015),
 
     GetMachineLearning(0x0016),

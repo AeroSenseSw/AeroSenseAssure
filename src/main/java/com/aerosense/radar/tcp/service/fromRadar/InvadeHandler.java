@@ -22,6 +22,8 @@ public class InvadeHandler  implements RadarProtocolDataHandler {
         //TODO process the invade alarm
         System.out.println("invade alarm");
         System.out.println("process the invade alarm you want to");
+        System.out.println(("radar ID: "+protocolData.getRadarId()+ "radar Version: "+protocolData.getRadarVersion()));
+
         RadarProtocolData radarProtocolData = new RadarProtocolData();
         radarProtocolData.setFunction(FunctionEnum.Invade);
         radarProtocolData.setData(ByteUtil.intToByteBig(1));
