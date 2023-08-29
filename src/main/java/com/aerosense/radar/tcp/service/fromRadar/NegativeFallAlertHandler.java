@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class NegFallDetectHandler  implements RadarProtocolDataHandler {
+public class NegativeFallAlertHandler  implements RadarProtocolDataHandler {
 
     @Override
     public Object process(RadarProtocolData protocolData) throws RemotingException, InterruptedException {
@@ -26,6 +26,6 @@ public class NegFallDetectHandler  implements RadarProtocolDataHandler {
 
     @Override
     public Set<FunctionEnum> interests() {
-        return Sets.newHashSet(FunctionEnum.NegFallDetect);
+        return Sets.newHashSet(FunctionEnum.NegativeFallAlert);
     }
 }

@@ -31,6 +31,6 @@ public class EliminateFallDetectHandler implements RadarProtocolDataHandler {
 
     @Override
     public Set<FunctionEnum> interests() {
-        return Sets.newHashSet(FunctionEnum.EliminateFallDetection);
+        return Sets.newHashSet(FunctionEnum.EliminateFallAlert);
     }
 }

@@ -148,9 +148,9 @@ public class RequestRadarUtil {
      * @return
      * @throws RemotingException
      */
-    public static int getFallReportTimer(String radarId) throws RemotingException {
+    public static int getFallReportBufferTime(String radarId) throws RemotingException {
         RadarProtocolData radarProtocolData = RadarProtocolData.newInstance(radarId,
-                FunctionEnum.GetFallReportTimer, ByteUtil.intToByteBig(0));
+                FunctionEnum.GetFallReportBufferTime, ByteUtil.intToByteBig(0));
         RadarProtocolData retObj = invokeToRadar(radarProtocolData);
         return ByteUtil.bytes2IntBig(retObj.getData());
     }
@@ -159,16 +159,16 @@ public class RequestRadarUtil {
 
      *
      * @param radarId
-     * @param fallReportTimer
+     * @param FallReportBufferTime
      * @return
      * @throws RemotingException
      */
-    public static boolean setFallReportTimer(String radarId, int fallReportTimer) throws RemotingException {
-        if (fallReportTimer > 300 || fallReportTimer < 10) {
-            throw new IllegalArgumentException("fallReportTimer value invalid : " + fallReportTimer);
+    public static boolean setFallReportBufferTime(String radarId, int FallReportBufferTime) throws RemotingException {
+        if (FallReportBufferTime > 300 || FallReportBufferTime < 10) {
+            throw new IllegalArgumentException("FallReportBufferTime value invalid : " + FallReportBufferTime);
         }
         RadarProtocolData radarProtocolData = RadarProtocolData.newInstance(radarId,
-                FunctionEnum.SetFallReportTimer, ByteUtil.intToByteBig(fallReportTimer));
+                FunctionEnum.SetFallReportBufferTime, ByteUtil.intToByteBig(FallReportBufferTime));
         RadarProtocolData retObj = invokeToRadar(radarProtocolData);
         return ByteUtil.byte4ToInt(retObj.getData()) == RadarProtocolConsts.RET_SUCCESS;
     }
@@ -206,12 +206,12 @@ public class RequestRadarUtil {
     }
 
 
-    public static boolean setInvadeEnable(String radarId, int status) throws RemotingException {
+    public static boolean setIntrusionDetect(String radarId, int status) throws RemotingException {
         if (status != 0 && status != 1) {
             throw new IllegalArgumentException("status value must 0 or 1");
         }
         RadarProtocolData radarProtocolData = RadarProtocolData.newInstance(radarId,
-                FunctionEnum.SetInvadeEnable, ByteUtil.intToByteBig(status));
+                FunctionEnum.SetIntrusionDetect, ByteUtil.intToByteBig(status));
         RadarProtocolData retObj = invokeToRadar(radarProtocolData, 5000);
         return ByteUtil.bytes2IntBig(retObj.getData()) == RadarProtocolConsts.RET_SUCCESS;
     }
@@ -223,9 +223,9 @@ public class RequestRadarUtil {
      * @return
      * @throws RemotingException
      */
-    public static boolean isInvadeEnable(String radarId) throws RemotingException {
+    public static boolean isIntrusionDetect(String radarId) throws RemotingException {
         RadarProtocolData radarProtocolData = RadarProtocolData.newInstance(radarId,
-                FunctionEnum.GetInvadeEnable, ByteUtil.intToByteBig(0));
+                FunctionEnum.GetIntrusionDetect, ByteUtil.intToByteBig(0));
         RadarProtocolData retObj = invokeToRadar(radarProtocolData);
         return ByteUtil.byte4ToInt(retObj.getData()) == RadarProtocolConsts.ALGORITHM_STATUS_OPEN;
     }
@@ -236,10 +236,10 @@ public class RequestRadarUtil {
      * @return
      * @throws RemotingException
      */
-    public static boolean startPositionStudy(String radarId) throws RemotingException {
+    public static boolean startRoomLayout(String radarId) throws RemotingException {
         byte[] bytes = {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
         RadarProtocolData radarProtocolData = RadarProtocolData.newInstance(radarId,
-                FunctionEnum.PositionStudy, bytes);
+                FunctionEnum.RoomLayout, bytes);
         RadarProtocolData retObj = invokeToRadar(radarProtocolData);
         return retObj.getData()!=null && Objects.deepEquals(retObj.getData(), bytes);
     }
@@ -250,10 +250,10 @@ public class RequestRadarUtil {
      * @throws RemotingException
      * @return
      */
-    public static boolean endPositionStudy(String radarId) throws RemotingException {
+    public static boolean endRoomLayout(String radarId) throws RemotingException {
         byte[] bytes = {0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0};
         RadarProtocolData radarProtocolData = RadarProtocolData.newInstance(radarId,
-                FunctionEnum.PositionStudy, bytes);
+                FunctionEnum.RoomLayout, bytes);
         RadarProtocolData retObj = invokeToRadar(radarProtocolData);
         return retObj.getData()!=null && Objects.deepEquals(retObj.getData(), bytes);
     }
