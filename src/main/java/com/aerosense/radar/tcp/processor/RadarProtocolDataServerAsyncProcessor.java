@@ -1,21 +1,21 @@
 
 package com.aerosense.radar.tcp.processor;
 
-import com.aerosense.radar.tcp.connection.RadarAddressMap;
-import com.alipay.remoting.AsyncContext;
-import com.alipay.remoting.BizContext;
-import com.alipay.remoting.Connection;
-import com.alipay.remoting.rpc.protocol.AsyncUserProcessor;
-import com.google.common.primitives.Ints;
-import com.aerosense.radar.tcp.server.RadarTcpServer;
 import com.aerosense.radar.tcp.connection.ConnectionUtil;
+import com.aerosense.radar.tcp.connection.RadarAddressMap;
 import com.aerosense.radar.tcp.exception.RadarException;
 import com.aerosense.radar.tcp.handler.base.RadarProtocolDataHandler;
 import com.aerosense.radar.tcp.handler.base.RadarProtocolDataHandlerManager;
 import com.aerosense.radar.tcp.protocol.FunctionEnum;
 import com.aerosense.radar.tcp.protocol.RadarProtocolData;
+import com.aerosense.radar.tcp.server.RadarTcpServer;
 import com.aerosense.radar.tcp.util.ByteUtil;
 import com.aerosense.radar.tcp.util.ByteUtils;
+import com.alipay.remoting.AsyncContext;
+import com.alipay.remoting.BizContext;
+import com.alipay.remoting.Connection;
+import com.alipay.remoting.rpc.protocol.AsyncUserProcessor;
+import com.google.common.primitives.Ints;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -56,7 +56,6 @@ public class RadarProtocolDataServerAsyncProcessor extends AsyncUserProcessor<Ra
                 log.warn("no handler response: null {} {}", radarProtocolData.getRadarId(),
                         radarProtocolData.getFunction());
             }
-
             radarProtocolData.setData(Ints.toByteArray(0));
             asyncContext.sendResponse(radarProtocolData);
             return;
@@ -70,7 +69,8 @@ public class RadarProtocolDataServerAsyncProcessor extends AsyncUserProcessor<Ra
             asyncContext.sendResponse(result);
         } catch (Exception e) {
             log.error("handler process happen exception", e);
-            asyncContext.sendResponse(new RadarException(e));
+            radarProtocolData.setData(Ints.toByteArray(0));
+            asyncContext.sendResponse(radarProtocolData);
         }
     }
 
