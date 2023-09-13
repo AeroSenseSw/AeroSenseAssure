@@ -37,16 +37,6 @@ public class RadarSerializer implements Serializer {
                 System.arraycopy(protocolData.getData(), 0, bytes, 2, dataLen);
             }
             return bytes;
-        } else if (object instanceof Exception) {
-            byte[] dataBytes = ((Exception) object).getMessage().getBytes(StandardCharsets.UTF_8);
-            int dataLen = dataBytes.length;
-            byte[] bytes = new byte[RADAR_PROTOCOL_FUNCTION_BYTE_LENGTH + dataLen];
-            byte[] functionBytes = toByteArray(FunctionEnum.ERROR.getFunction());
-            System.arraycopy(functionBytes, 0, bytes, 0, 2);
-            if (dataLen > 0) {
-                System.arraycopy(dataBytes, 0, bytes, 2, dataLen);
-            }
-            return bytes;
         } else {
             throw new CodecException("unsupport serialize data type "
                     + object.getClass().toString());

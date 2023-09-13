@@ -65,7 +65,8 @@ public class RadarProtocolDataServerAsyncProcessor extends AsyncUserProcessor<Ra
             asyncContext.sendResponse(result);
         } catch (Exception e) {
             log.error("handler process happen exception", e);
-            asyncContext.sendResponse(new RadarException(e));
+            radarProtocolData.setData(Ints.toByteArray(0));
+            asyncContext.sendResponse(radarProtocolData);
         }
     }
 
