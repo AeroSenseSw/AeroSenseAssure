@@ -19,7 +19,7 @@ public class NegativeFallAlertHandler  implements RadarProtocolDataHandler {
         System.out.println("Neg fall detection alarm");
         System.out.println("process the Neg fall detection alarm you want to");
         RadarProtocolData radarProtocolData = new RadarProtocolData();
-        radarProtocolData.setFunction(FunctionEnum.FallDetect);
+        radarProtocolData.setFunction(FunctionEnum.NegativeFallAlert);
         radarProtocolData.setData(ByteUtil.intToByteBig(1));
         return radarProtocolData;
     }

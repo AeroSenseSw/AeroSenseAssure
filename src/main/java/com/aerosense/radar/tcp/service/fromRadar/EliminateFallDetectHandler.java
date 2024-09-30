@@ -24,7 +24,7 @@ public class EliminateFallDetectHandler implements RadarProtocolDataHandler {
         System.out.println("FallDetection Alarm Elimination");
         System.out.println("process the FallDetection Alarm Elimination you want to");
         RadarProtocolData radarProtocolData = new RadarProtocolData();
-        radarProtocolData.setFunction(FunctionEnum.FallDetect);
+        radarProtocolData.setFunction(FunctionEnum.EliminateFallAlert);
         radarProtocolData.setData(ByteUtil.intToByteBig(1));
         return radarProtocolData;
     }
