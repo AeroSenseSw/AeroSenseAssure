@@ -6,6 +6,7 @@ import com.radar.fall.tcp.hander.base.RadarProtocolDataHandler;
 import com.radar.fall.tcp.protocol.FunctionEnum;
 import com.radar.fall.tcp.protocol.RadarProtocolData;
 import com.radar.fall.tcp.util.ByteUtil;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import java.util.Set;
  * PresenceDetection handler
  * @author jia.wu
  */
+@Service
 public class PresenceDetectionHandler implements RadarProtocolDataHandler {
     @Override
     public Object process(RadarProtocolData protocolData) {

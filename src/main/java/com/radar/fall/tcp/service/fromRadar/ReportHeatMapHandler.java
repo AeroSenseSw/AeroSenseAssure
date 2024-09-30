@@ -1,24 +1,18 @@
 package com.radar.fall.tcp.service.fromRadar;
 
 import com.google.common.collect.Sets;
-import com.radar.fall.tcp.domain.HeatMapsData;
 import com.radar.fall.tcp.hander.base.RadarProtocolDataHandler;
 import com.radar.fall.tcp.protocol.FunctionEnum;
 import com.radar.fall.tcp.protocol.RadarProtocolData;
-
 import com.radar.fall.tcp.util.ByteUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
  *  report heat map handler
  * @author ：jia.w
  */
-@Slf4j
 @Service
 public class ReportHeatMapHandler  implements RadarProtocolDataHandler {
 
