@@ -51,9 +51,10 @@ public enum FunctionEnum {
 
     EliminateFallAlert(0x0017),
 
-    softReboot(0x0411),
-    /**
+    PresenceDetection(0x0018),
 
+    /**
+      * firmware upgrade
      */
     notifyUpdate(0x0021), issueFirmware(0x0022), updateResult(0x0023);
 
