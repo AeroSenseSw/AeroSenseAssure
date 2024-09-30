@@ -23,9 +23,9 @@ public enum FunctionEnum {
 
     GetInstallHeight(0x0003),
 
-    SetFallReportTimer(0x0004),
+    SetFallReportBufferTime(0x0004),
 
-    GetFallReportTimer(0x0005),
+    GetFallReportBufferTime(0x0005),
 
     SetWorkingRange(0x0006),
 
@@ -33,7 +33,7 @@ public enum FunctionEnum {
 
     FallDetect(0x0009),
 
-    Invade(0x000a),
+    IntrusionAlert(0x000a),
 
     ReportHeatMap(0x000b),
 
@@ -41,15 +41,25 @@ public enum FunctionEnum {
 
     GetHeatMapEnable(0x000d),
 
-    SetInvadeEnable(0x000e),
+    SetIntrusionDetect(0x000e),
 
-    GetInvadeEnable(0x000f),
+    GetIntrusionDetect(0x000f),
 
-    PositionStudy(0x0010),
+    RoomLayout(0x0010),
 
-    softReboot(0x0411),
+    NegativeFallAlert(0x0011),
+
+    Register(0x0012),
+
+    SetMachineLearning(0x0015),
+
+    GetMachineLearning(0x0016),
+
+    EliminateFallAlert(0x0017),
+
+    PresenceDetection(0x0018),
     /**
-
+      *  firmware upgrade
      */
     notifyUpdate(0x0021), issueFirmware(0x0022), updateResult(0x0023);
 

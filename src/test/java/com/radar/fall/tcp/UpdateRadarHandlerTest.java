@@ -15,7 +15,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.IOException;
 import java.util.Set;
 
-
+/**
+ * @description: Test update radar firmware
+ * @author jia.wu
+ * @version 1.0.0
+ * @date 2023/3/20 16:06
+ */
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @Slf4j
 public class UpdateRadarHandlerTest {

@@ -1,36 +1,37 @@
 package com.radar.fall.tcp.service.fromRadar;
 
+
 import com.alipay.remoting.exception.RemotingException;
 import com.google.common.collect.Sets;
 import com.radar.fall.tcp.hander.base.RadarProtocolDataHandler;
 import com.radar.fall.tcp.protocol.FunctionEnum;
 import com.radar.fall.tcp.protocol.RadarProtocolData;
 import com.radar.fall.tcp.util.ByteUtil;
-
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-
 /**
- * fall detect alarm handler
+ * @description: FallDetection Alarm Elimination Handler
  * @author jia.wu
+ * @date 2023/7/11 10:19
+ * @version 1.0.0
  */
 @Service
-public class FallDetectHandler  implements RadarProtocolDataHandler {
+public class EliminateFallDetectHandler implements RadarProtocolDataHandler {
 
     @Override
     public Object process(RadarProtocolData protocolData) throws RemotingException, InterruptedException {
-        //TODO process the fall detection
-        System.out.println("fall detection alarm radarId: "+protocolData.getRadarId());
-        System.out.println("process the fall detection alarm you want to");
+        //TODO process the FallDetection Alarm Elimination
+        System.out.println("FallDetection Alarm Elimination radarId:"+protocolData.getRadarId());
+        System.out.println("process the FallDetection Alarm Elimination you want to");
         RadarProtocolData radarProtocolData = new RadarProtocolData();
-        radarProtocolData.setFunction(FunctionEnum.FallDetect);
+        radarProtocolData.setFunction(FunctionEnum.EliminateFallAlert);
         radarProtocolData.setData(ByteUtil.intToByteBig(1));
         return radarProtocolData;
     }
 
     @Override
     public Set<FunctionEnum> interests() {
-        return Sets.newHashSet(FunctionEnum.FallDetect);
+        return Sets.newHashSet(FunctionEnum.EliminateFallAlert);
     }
 }

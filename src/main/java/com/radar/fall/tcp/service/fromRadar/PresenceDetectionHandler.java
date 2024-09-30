@@ -1,36 +1,30 @@
 package com.radar.fall.tcp.service.fromRadar;
 
-import com.alipay.remoting.exception.RemotingException;
+
 import com.google.common.collect.Sets;
 import com.radar.fall.tcp.hander.base.RadarProtocolDataHandler;
 import com.radar.fall.tcp.protocol.FunctionEnum;
 import com.radar.fall.tcp.protocol.RadarProtocolData;
 import com.radar.fall.tcp.util.ByteUtil;
 
-import org.springframework.stereotype.Service;
-
 import java.util.Set;
 
 /**
- * invade alarm handler
+ * PresenceDetection handler
  * @author jia.wu
  */
-@Service
-public class InvadeHandler  implements RadarProtocolDataHandler {
-
+public class PresenceDetectionHandler implements RadarProtocolDataHandler {
     @Override
-    public Object process(RadarProtocolData protocolData) throws RemotingException, InterruptedException {
-        //TODO process the invade alarm
-        System.out.println("invade alarm");
-        System.out.println("process the invade alarm you want to");
+    public Object process(RadarProtocolData protocolData) {
+        System.out.println("presence detection radarId:"+ protocolData.getRadarId() +" data: "+protocolData.getData());
         RadarProtocolData radarProtocolData = new RadarProtocolData();
-        radarProtocolData.setFunction(FunctionEnum.Invade);
+        radarProtocolData.setFunction(FunctionEnum.PresenceDetection);
         radarProtocolData.setData(ByteUtil.intToByteBig(1));
         return radarProtocolData;
     }
 
     @Override
     public Set<FunctionEnum> interests() {
-        return Sets.newHashSet(FunctionEnum.Invade);
+        return Sets.newHashSet(FunctionEnum.PresenceDetection);
     }
 }
