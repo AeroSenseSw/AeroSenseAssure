@@ -130,14 +130,14 @@ public class RadarTcpServer extends RpcServer {
 
     public static RadarTcpServer radarServerStarter( List<RadarProtocolDataHandler> handlers) {
         System.setProperty("logging.path", "./logs/server");
-        String serverAddress = "127.0.0.1:8899";
-        RadarAddressMap radarAddressMap = new RadarAddressHashMap(serverAddress);
         RadarTcpServerProperties properties = new RadarTcpServerProperties();
+        String serverAddress = properties.getHost()+":"+properties.getPort();
+        RadarAddressMap radarAddressMap = new RadarAddressHashMap(serverAddress);
         RadarTcpServer radarTcpServer = new RadarTcpServer(radarAddressMap, properties);
         for (RadarProtocolDataHandler handler : handlers) {
             radarTcpServer.registerHandler(handler);
         }
-        log.info("radarTcpServer start at 8899");
+        log.info("radarTcpServer start at {}", serverAddress);
         radarTcpServer.startup();
         return radarTcpServer;
     }
