@@ -53,6 +53,8 @@ public enum FunctionEnum {
 
     PresenceDetection(0x0018),
 
+    PersonPositionDetection(0x001c),
+
     /**
       * firmware upgrade
      */
