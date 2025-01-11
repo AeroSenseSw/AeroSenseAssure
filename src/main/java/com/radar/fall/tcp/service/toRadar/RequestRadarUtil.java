@@ -247,4 +247,36 @@ public class RequestRadarUtil {
         RadarProtocolData retObj = invokeToRadar(radarProtocolData);
         return retObj.getData()!=null && Objects.deepEquals(retObj.getData(), bytes);
     }
+
+    /**
+     * Set machine learning status switch
+     * @param radarId
+     * @param status
+     *  1: enable
+     *  0: disable
+     * @return
+     * @throws RemotingException
+     */
+    public static boolean setMachineLearning(String radarId, int status) throws RemotingException {
+        if (status != 0 && status != 1) {
+            throw new IllegalArgumentException("status value must 0 or 1");
+        }
+        RadarProtocolData radarProtocolData = RadarProtocolData.newInstance(radarId,
+                FunctionEnum.SetMachineLearning, ByteUtil.intToByteBig(status));
+        RadarProtocolData retObj = invokeToRadar(radarProtocolData, 5000);
+        return ByteUtil.bytes2IntBig(retObj.getData()) == RadarProtocolConsts.RET_SUCCESS;
+    }
+
+    /**
+     * Get machine learning status switch
+     * @param radarId
+     * @return
+     * @throws RemotingException
+     */
+    public static boolean isMachineLearningEnable(String radarId) throws RemotingException {
+        RadarProtocolData radarProtocolData = RadarProtocolData.newInstance(radarId,
+                FunctionEnum.GetMachineLearning, ByteUtil.intToByteBig(0));
+        RadarProtocolData retObj = invokeToRadar(radarProtocolData);
+        return ByteUtil.byte4ToInt(retObj.getData()) == RadarProtocolConsts.ALGORITHM_STATUS_OPEN;
+    }
 }
