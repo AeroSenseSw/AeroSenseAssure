@@ -58,6 +58,8 @@ public enum FunctionEnum {
     EliminateFallAlert(0x0017),
 
     PresenceDetection(0x0018),
+
+    PersonPositionDetection(0x001c),
     /**
       *  firmware upgrade
      */
